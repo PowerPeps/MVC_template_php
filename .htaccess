@@ -1,0 +1,16 @@
+# Activer le moteur de réécriture
+RewriteEngine On
+
+# Rediriger toutes les requêtes vers index.php (sauf les fichiers et dossiers existants)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+# Sécurité : Bloquer l'accès direct aux fichiers PHP sensibles
+<FilesMatch "^(config\.php|const\.php|db_pdo\.php|autoload\.php)$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# Désactiver l’affichage des répertoires
+Options -Indexes
